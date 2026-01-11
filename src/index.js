@@ -15,8 +15,8 @@ const initialState = {
 
 // reducer - чиста функція (state,action) => state
 // action - {type: 'increment'} - js-onject з обовʼязковою властивістю
-function counterReducer (state = initialState, actions) {
-  const { type } = actions
+function counterReducer (state = initialState, action) {
+  const { type } = action
   switch (type) {
     case 'increment': {
       const { count, step } = state

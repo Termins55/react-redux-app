@@ -1,23 +1,13 @@
 import { connect } from 'react-redux'
 
 function Counter (props) {
-  const { count, step, dispatch } = props
+  const { count, step, decrementCount, incrementCount, setNewStep } = props
 
-  const decCount = () => {
-    const action = { type: 'decrement' }
-    dispatch(action)
-    // counterReducer(state,action)
-  }
+  const decCount = () => decrementCount()
 
-  const incCount = () => {
-    const action = { type: 'increment' }
-    dispatch(action)
-  }
+  const incCount = () => incrementCount()
 
-  const stepChangeHandler = ({ target: { value } }) => {
-    const action = { type: 'setStep', value: Number(value) }
-    dispatch(action)
-  }
+  const stepChangeHandler = ({ target: { value } }) => setNewStep(Number(value))
 
   return (
     <div>
@@ -33,8 +23,22 @@ const mapStateToProps = state => {
   return state
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    decrementCount: () => {
+      dispatch({ type: 'decrement' })
+    },
+    incrementCount: () => {
+      dispatch({ type: 'increment' })
+    },
+    setNewStep: value => {
+      dispatch({ type: 'setStep', value: value })
+    }
+  }
+}
+
 // Створює HOC, який прокине dispatch в пропси
 // перший параметр приймає функцію, щоб прокинути в пропси стан
-const withAccessToStore = connect(mapStateToProps)
+const withAccessToStore = connect(mapStateToProps, mapDispatchToProps)
 
 export default withAccessToStore(Counter)

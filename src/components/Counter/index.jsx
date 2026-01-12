@@ -13,11 +13,18 @@ function Counter (props) {
     const action = { type: 'increment' }
     dispatch(action)
   }
+
+  const stepChangeHandler = ({ target: { value } }) => {
+    const action = { type: 'setStep', value: Number(value) }
+    dispatch(action)
+  }
+
   return (
     <div>
       Count: {count}
       <button onClick={decCount}>-</button>
       <button onClick={incCount}>+</button>
+      <input type='number' value={step} onChange={stepChangeHandler} />
     </div>
   )
 }

@@ -1,11 +1,12 @@
-import { legacy_createStore, applyMiddleware } from 'redux'
-import { composeWithDevTools } from '@redux-devtools/extension'
-import counterReducer from './reducer'
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from './slices/counterSlice';
+import themeReducer from './slices/themeSlice';
 
-// сховище = стан + як змінювати стан (редюсер)
-const store = legacy_createStore(
-  counterReducer,
-  composeWithDevTools(applyMiddleware())
-)
+const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+    theme: themeReducer,
+  },
+});
 
-export default store
+export default store;

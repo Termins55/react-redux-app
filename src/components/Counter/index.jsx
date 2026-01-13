@@ -1,13 +1,15 @@
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { decrement, increment, setStep } from '../../store/slices/counterSlice';
 
 function Counter (props) {
-  const { count, step, decrementCount, incrementCount, setNewStep } = props
+  const { count, step, decrementCount, incrementCount, setNewStep } = props;
 
-  const decCount = () => decrementCount()
+  const decCount = () => decrementCount();
 
-  const incCount = () => incrementCount()
+  const incCount = () => incrementCount();
 
-  const stepChangeHandler = ({ target: { value } }) => setNewStep(Number(value))
+  const stepChangeHandler = ({ target: { value } }) =>
+    setNewStep(Number(value));
 
   return (
     <div>
@@ -16,29 +18,29 @@ function Counter (props) {
       <button onClick={incCount}>+</button>
       <input type='number' value={step} onChange={stepChangeHandler} />
     </div>
-  )
+  );
 }
 
 const mapStateToProps = state => {
-  return state
-}
+  return state.counter;
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     decrementCount: () => {
-      dispatch({ type: 'decrement' })
+      dispatch(decrement());
     },
     incrementCount: () => {
-      dispatch({ type: 'increment' })
+      dispatch(increment());
     },
     setNewStep: value => {
-      dispatch({ type: 'setStep', value: value })
-    }
-  }
-}
+      dispatch(setStep(value)); // =>action.payload
+    },
+  };
+};
 
 // Створює HOC, який прокине dispatch в пропси
 // перший параметр приймає функцію, щоб прокинути в пропси стан
-const withAccessToStore = connect(mapStateToProps, mapDispatchToProps)
+const withAccessToStore = connect(mapStateToProps, mapDispatchToProps);
 
-export default withAccessToStore(Counter)
+export default withAccessToStore(Counter);
